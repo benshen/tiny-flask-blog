@@ -1,0 +1,12 @@
+<!-- This is from peewee example -->
+{% if pagination.get_page_count() > 1 %}
+<div class="pagination">
+  {% if pagination.get_page() > 1 %}
+    <li class="previous"><a href="./?{{ request.args|clean_querystring('page', page=pagination.get_page() - 1) }}">&laquo; Previous {{ pagination.get_page() - 1 }} / {{ pagination.get_page_count() }}</a></li>
+  {% endif %}
+  
+  {% if pagination.get_page_count() > pagination.get_page() %}
+    <li class="next"><a href="./?{{ request.args|clean_querystring('page', page=pagination.get_page() + 1) }}">Next {{ pagination.get_page() + 1 }} / {{ pagination.get_page_count() }} &raquo;</a></li>
+  {% endif %}
+</div>
+{% endif %}

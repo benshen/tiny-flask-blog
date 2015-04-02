@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pure-g content">
+
+    <div class="pure-u-1">
+        <h1>{{ title }}</h1>
+        <hr>
+    </div>
+
+    {% for entry in object_list %}
+    <div class="pure-u-1">
+        <h2 class="post-title">{{ entry.title }}</h2>
+        <p class="post-meta">
+            Published on: {{ entry.post_date | timeformat }}
+             
+            {% if entry.tags[0] %}
+                Tags: 
+            {% endif %}
+            {% for tag in entry.tags %}
+                <a class="post-tag post-tag-design" href="{{url_for('index', tag=tag.name)}}">{{tag}}</a> 
+            {% endfor %}
+        </p>
+
+        <p>
+            <a href="{{ url_for('detail', slug=entry.slug) }}">&gt;&gt;Read more</a>&nbsp;&nbsp;
+
+            {%  if current_user.is_authenticated %}
+                <a href="{{ url_for('edit', id=entry.id) }}">&gt;&gt;Modify</a>&nbsp;&nbsp;
+                <a href="{{ url_for('delete', id=entry.id) }}" onclick="return confirm('Are you sure to delete it?')">&gt;&gt;Delete</a>
+            {% endif %}
+        </p>
+        <hr>
+    </div>
+    {% endfor %}
+
+    <div class="pure-u-1">
+    {% include "includes/pagination.html" %}
+    </div>
+</div>
+
+{% endblock %}

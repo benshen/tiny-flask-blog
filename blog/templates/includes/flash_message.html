@@ -1,0 +1,5 @@
+<div class="pure-u-1">
+{% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+{% endfor %}
+</div>

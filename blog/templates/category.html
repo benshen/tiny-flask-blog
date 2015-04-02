@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+    <div class="pure-g">
+        <div class="pure-u-1">
+            <h1>Category</h1>
+        </div>
+    </div>
+
+
+    <form class="pure-form" action="{{ url_for('category_add_or_edit') }}" method="post">
+        <fieldset >
+            <div class="pure-g">
+                <div class="pure-u-1-2">
+                    <input type="text"  class="pure-u-23-24" placeholder="Category Name" name="name" 
+                    value="{{ entry.name if entry else '' }}">
+                </div>
+
+                <div class="pure-u-1-2">
+                    <button type="submit" class="pure-button pure-button-primary" onclick="return confirm('Are you sure to {{ 'modify' if entry else 'add'}} the cateogry?')">{{ "Modify" if entry else "Add"}}</button>
+                </div>
+            </div>
+        </fieldset>
+        <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+        {% if entry %}
+        <input name="id" type="hidden" value="{{ entry.id }}">
+        {% endif %}
+    </form>
+
+    
+
+    <div class="pure-g">
+        <div class="pure-u-1">
+            <table class="pure-table pure-table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Article Count</th>
+                        <th>Article Lists</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for entry in object_list %}
+                    <tr >
+                        <td>{{ entry.name }}</td>
+                        <td>{{ entry.article_count }}</td>
+                        <td><a href="{{ url_for('lists', cat=entry.name) }}">Lists</a></td>
+                        <td><a href="{{ url_for('category_edit',   id=entry.id) }}">Modify</a>&nbsp;&nbsp;
+                            <a href="{{ url_for('category_delete', id=entry.id) }}" onclick="return confirm('It will delete all articles in this category!\nAre you sure to delete it?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="pure-u-1">{% include "includes/pagination.html" %}</div>
+</div>
+{% endblock %}

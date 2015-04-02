@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% include "includes/header.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="pure-g content">
+    <div class="pure-u-1">
+        <h2 class="post-title">Tags:</h2>
+        {% for tag in tags %}
+            <li><a href="{{ url_for('lists', tag=tag.name) }}">{{ tag.name }}({{ tag.article_count }})</a></li>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

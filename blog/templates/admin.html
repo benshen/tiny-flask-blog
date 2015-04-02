@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pure-g content">
+    <div class="pure-u-1">
+        <h1>All Posts</h1>
+        <table class="pure-table pure-table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for entry in object_list %}
+                <tr >
+                    <td><a href="{{ url_for('detail', slug=entry.slug) }}">{{ entry.title }}</a>
+                    </td>
+                    <td><a href="{{ url_for('lists', cat=entry.category.name) }}">{{ entry.category }}</a></td>
+                    <td>{{ entry.post_date | timeformat }}</td>
+                    <td><a href="{{ url_for('edit', id=entry.id) }}">Modify</a>&nbsp;&nbsp;
+                        <a href="{{ url_for('delete', id=entry.id) }}" onclick="return confirm('Are you sure to delete it?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pure-u-1">{% include "includes/pagination.html" %}</div>
+</div>
+{% endblock %}
