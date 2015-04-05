@@ -1,8 +1,9 @@
 # tiny-flask-blog
-This is a blog app written in Flask with markdown editor
+This is a blog app written in Flask
 
 ## Feature
 
+* Install wizard
 * Markdown editor
 * Code lighlight
 * Tag support
